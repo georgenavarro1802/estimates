@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block heading %}
+    <style>
+
+        form label,legend
+        {
+            color:#123456;
+        }
+        p{
+            text-align:center;
+        }
+        span{
+            color:red;
+        }
+
+    </style>
+
+{% endblock %}
+
+{% block action-header %}{% endblock %}
+{% block back-header %}{% endblock %}
+
+{% block content %}
+    <form method="post" action="/" data-ajax="false" autocomplete="off" style="padding-top: 45%">
+{#        <label for="user">User: <span>*</span></label>#}
+        <input type="text" name="user" id="user" placeholder="User">
+{#        <label for="passw">Password: <span>*</span></label>#}
+        <input type="password" id="passw" name="passw" placeholder="Password"/>
+        <input type="submit" id="btnsubmit" data-icon="action" data-inline="true" value="Submit" data-theme="b">
+        {% if error %}
+            <span style="background-color: red; color: white; font-size: 0.8em"><i> Credenciales incorrectas</i></span>
+        {% endif %}
+    </form>
+{% endblock %}
+

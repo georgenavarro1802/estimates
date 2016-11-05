@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+
+    <link rel="shortcut icon" type="image/png" href="/static/images/bodyshop.png"/>
+    <link rel="stylesheet" href="{% static 'css/jquery.mobile.structure-1.4.5.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/jquery.mobile-1.4.5.css' %}" />
+
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.mobile-1.4.5.js' %}"></script>
+
+    <script>
+
+        $(function () {
+
+            numerico = function(elemento, min, max, decimales) {
+                var nvalor;
+                var valor = elemento.val();
+                if (valor==""){
+                    valor = parseFloat(min).toFixed(decimales);
+                    elemento.val(valor);
+                    return;
+                }
+                if (isNaN(valor)){
+                    nvalor = parseFloat(min).toFixed(decimales);
+                    elemento.val(nvalor);
+                    return;
+                }
+                if (valor < min) {
+                    nvalor = parseFloat(min).toFixed(decimales);
+                    elemento.val(nvalor);
+                    return;
+                }
+                if (max>0 && valor>max){
+                    nvalor = parseFloat(max).toFixed(decimales);
+                    elemento.val(nvalor);
+                    return;
+                }
+                nvalor = parseFloat(valor).toFixed(decimales);
+                elemento.val(nvalor);
+            };
+
+        });
+    </script>
+    {% block heading %}
+    {% endblock %}
+</head>
+
+<body>
+
+<div data-role="page" {% block background %}style="background: #000 url(/static/images/fondo.jpg) no-repeat; background-size:cover;"{% endblock %}>
+
+    <div data-role="header" data-theme="b" data-position="fixed">
+        {% block action-header %}
+            <a href="{% block action-href %}#{% endblock %}" data-rel="dialog" data-transition="flow" class="{% block action-href-class %}{% endblock %}">{% block action-href-name %}{% endblock %}</a>
+        {% endblock %}
+        <p style="font-size: 0.9em; text-align: center">{{ title_short }}</p>
+        {% block back-header %}
+            <a href="{% block back-href %}#{% endblock %}" class="{% block back-href-class %}{% endblock %}">{% block back-href-name %}{% endblock %}</a>
+        {% endblock %}
+    </div>
+
+    <div role="main" class="ui-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <div data-role="footer" data-theme="b" data-position="fixed">
+        <p style="font-size: 0.7em; text-align: center">{{ footer_text }} &copy; {{ current_time|date:'Y' }}</p>
+    </div>
+</div>
+
+</body>
+
+</html>

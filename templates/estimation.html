@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block heading %}
+    <script>
+        $(function () {
+
+            $("#discount-value").blur(function () {
+                numerico($(this), 0, 0, 2);
+                var val = $(this).val();
+                var neto = parseFloat("{{ estimation.neto_value }}");
+                var total = parseFloat("{{ estimation.subtotal_value }}");
+                if (val > 0){
+                    $("#discount").val(val);
+                    total = neto - val;
+                }else{
+                    total = neto;
+                }
+                $("#total-value").html("$ " + total.toFixed(2));
+            });
+
+        });
+    </script>
+{% endblock %}
+
+{% block background %}{% endblock %}
+
+{% block action-header %}{% endblock %}
+
+{% block back-href %}/hours?id={{ customer.id }}&lista={{ lista_ids }}{% endblock %}
+{% block back-href-name %}Back{% endblock %}
+{% block back-href-class %}ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l{% endblock %}
+
+{% block content %}
+    <div class="ui-body ui-body-a">
+        <p style="font-size: 0.8em"><b>Name:  </b>{{ customer.name }}</p>
+        <p style="font-size: 0.8em"><b>Phone: </b>{{ customer.phone }}</p>
+        <p style="font-size: 0.8em"><b>Email: </b>{{ customer.email }}</p>
+    </div>
+
+    {% for detail in estimation.my_details %}
+        <h4>{{ detail.element.name }}</h4>
+        <ul data-role="listview" data-count-theme="b" data-inset="true" id="list-estimation">
+            <li style='font-size: 0.8em'>
+                Service Type <span class='ui-li-count'>{{ detail.get_service_type }}</span>
+            </li>
+            <li style='font-size: 0.8em'>Labor <span class='ui-li-count'>$ {{ detail.val_labor|floatformat:2 }}</span></li>
+            <li style='font-size: 0.8em'>Refinish <span class='ui-li-count'>$ {{ detail.val_refinish|floatformat:2 }}</span></li>
+            <li style='font-size: 0.8em'>Frame <span class='ui-li-count'>$ {{ detail.val_frame|floatformat:2 }}</span></li>
+            <li style='font-size: 0.8em'>Mechanical <span class='ui-li-count'>$ {{ detail.val_mechanical|floatformat:2 }}</span></li>
+            <li style='font-size: 0.8em'>Paint/Supplies <span class='ui-li-count'>$ {{ detail.val_paint|floatformat:2 }}</span></li>
+        </ul>
+        <hr size="5" style="background-color: #1b1b1b"/>
+    {% endfor %}
+
+    <ul data-role="listview" data-count-theme="b" data-inset="true">
+        <li>
+            <strong>Subtotal value </strong>
+            <span style="font-size: 0.9em; float: right">$ {{ estimation.subtotal_value|floatformat:2 }}</span>
+        </li>
+        <li>
+            <strong>Tax value (7%) </strong>
+            <span style="font-size: 0.9em; float: right;">$ {{ estimation.tax_value|floatformat:2 }}</span>
+        </li>
+        <li style="vertical-align: middle">
+            <strong>Discount value </strong>
+            <span style="font-size: 0.9em; float: right; padding-top: 0"><input type="number" id="discount-value" value="0.00" style="width: 70px; text-align: right"/></span>
+        </li>
+        <li>
+            <strong>Total value </strong>
+            <span style="font-size: 0.9em" class="ui-li-count" id="total-value">$ {{ estimation.total_value|floatformat:2 }}</span>
+        </li>
+    </ul>
+
+    <form style="text-align: center" method="post">
+        <input id="send-email" data-inline="true" data-icon="navigation" value="Save and Send Email" type="submit">
+        <input name="ide" value="{{ estimation.id }}" type="hidden"/>
+        <input name="discount" value="0" type="hidden" id="discount"/>
+{#        <a href="/generar_reporte?id={{ estimation.id }}" class="ui-btn ui-corner-all" data-inline="true" data-icon="bullets">Report</a>#}
+    </form>
+
+{% endblock %}
+

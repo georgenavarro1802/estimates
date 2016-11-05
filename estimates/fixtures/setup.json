@@ -1,0 +1,70 @@
+[
+  {
+    "model": "web.customer",
+    "pk": 1,
+    "fields": {
+      "name": "Maria Pons",
+      "phone": "786-663-0517",
+      "email": "mcpons@hotmail.com"
+    }
+  },
+  {
+    "model": "web.customer",
+    "pk": 2,
+    "fields": {
+      "name": "Antonio Banderas",
+      "phone": "239-203-2417",
+      "email": "abanderas@gmail.com"
+    }
+  },
+  {
+    "model": "web.customer",
+    "pk": 3,
+    "fields": {
+      "name": "Michael Jones",
+      "phone": "954-789-2144",
+      "email": "mjones@yahoo.com"
+    }
+  },
+  {
+    "model": "web.element",
+    "pk": 1,
+    "fields": {
+      "name": "Right Front Door",
+      "value": 100.50
+    }
+  },
+  {
+    "model": "web.element",
+    "pk": 2,
+    "fields": {
+      "name": "Left Front Door",
+      "value": 120.00
+    }
+  },
+  {
+    "model": "web.element",
+    "pk": 3,
+    "fields": {
+      "name": "Hood",
+      "value": 250.00
+    }
+  },
+  {
+    "model": "web.element",
+    "pk": 4,
+    "fields": {
+      "name": "Front Bumper",
+      "value": 150.00
+    }
+  },
+  {
+    "model": "web.element",
+    "pk": 5,
+    "fields": {
+      "name": "Back Bumper",
+      "value": 180.00
+    }
+  }
+
+]

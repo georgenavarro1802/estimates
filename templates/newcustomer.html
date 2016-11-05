@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Willy's Paint & Body Shop</title>
+
+    <link rel="stylesheet" href="/static/css/jquery.mobile.structure-1.4.5.css" />
+    <link rel="stylesheet" href="/static/css/jquery.mobile-1.4.5.css" />
+
+    <script src="/static/js/jquery-1.11.1.min.js"></script>
+    <script src="/static/js/jquery.mobile-1.4.5.js"></script>
+
+</head>
+<body>
+
+<div data-role="page" id="dialog-success" data-close-btn="right" data-dom-cache="true"><!-- dialog-->
+
+    <div data-role="header" data-theme="b">
+        <h1>New Customer</h1>
+    </div><!-- /header -->
+
+    <div class="ui-content" role="main">
+        <form>
+            <div class="ui-field-contain">
+                <label for="txtName" style="font-weight: bold">Name</label>
+                <input name="txtName" id="txtName" value="" type="text">
+            </div>
+            <div class="ui-field-contain">
+                <label for="txtPhone" style="font-weight: bold">Phone</label>
+                <input name="txtPhone" id="txtPhone" value="" type="text">
+            </div>
+            <div class="ui-field-contain">
+                <label for="txtEmail" style="font-weight: bold">Email</label>
+                <input name="txtEmail" id="txtEmail" value="" type="text">
+            </div>
+        </form>
+        <a href="#" id="addcustomer" onclick="myFunction()" class="ui-btn ui-corner-all ui-shadow ui-btn-b">Save</a>
+        <script>
+
+            $(function () {
+
+                myFunction = function () {
+                    var name = $("#txtName").val();
+                    var phone = $("#txtPhone").val();
+                    var email = $("#txtEmail").val();
+                    if (!name || name == "" || name == " "){
+                        alert("Must write a name");
+                    }else{
+                        $.ajax({
+                            type: "POST",
+                            url: "/newcustomer",
+                            data: {"name": name, "phone": phone, "email": email},
+                            success: function(data) {
+                                if (data.result == 'ok') {
+                                    location.href = "/customers";
+                                } else {
+                                    alert(data.mensaje);
+                                }
+                            },
+                            error: function() {
+                                alert("Error");
+                            },
+                            dataType: "json"
+                        });
+                    }
+                };
+
+            });
+        </script>
+    </div>
+</div><!-- dialog-->
+
+</body>
+</html>

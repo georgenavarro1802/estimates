@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block background %}{% endblock %}
+
+{% block action-href %}/newcustomer{% endblock %}
+{% block action-href-name %}New{% endblock %}
+{% block action-href-class %}ui-btn ui-btn-left ui-corner-all ui-shadow ui-btn-inline ui-icon-plus ui-btn-icon-left{% endblock %}
+
+{% block back-header %}{% endblock %}
+
+{% block content %}
+    <ul data-role="listview" data-autodividers="true" data-filter="true" data-inset="true">
+        {% for customer in customers %}
+            <li><a href="/elements?id={{ customer.id }}"> {{ customer.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

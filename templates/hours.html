@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block heading %}
+    <script>
+        $(function () {
+            $(".ui-table-columntoggle-btn").hide();
+        });
+    </script>
+{% endblock %}
+
+{% block background %}{% endblock %}
+
+{% block action-header %}{% endblock %}
+
+{% block back-href %}/elements?id={{ customer.id }}{% endblock %}
+{% block back-href-name %}Back{% endblock %}
+{% block back-href-class %}ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l{% endblock %}
+
+{% block content %}
+    <div style="font-size: 0.7em">
+        <b>Name: </b>{{ customer.name }} | <b>Phone: </b>{{ customer.phone }}
+    </div>
+
+    <hr/>
+
+    {% for element in lista_elements %}
+        <table data-role="table" data-mode="columntoggle" ide="{{ element.id }}" class="ui-responsive table-listing">
+            <thead>
+            <tr>
+                <th>
+                    {{ element.name }}
+                    <select name="service-type{{ element.id }}" id="service-type{{ element.id }}" data-mini="true" data-inline="true">
+                        <option value="1">Repair</option>
+                        <option value="2">Replace</option>
+                    </select>
+                </th>
+                <th style="width: 60px"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style='vertical-align: middle; font-size: 1em'>Labor</td>
+                <td>
+                    <input type='number' class="hours" id='hrs-labor{{ element.id }}' value="1"/>
+                </td>
+            </tr>
+            <tr>
+                <td style='vertical-align: middle; font-size: 1em'>Refinish</td>
+                <td>
+                    <input type='number' class="hours" id='hrs-refinish{{ element.id }}' value="1"/>
+                </td>
+            </tr>
+            <tr>
+                <td style='vertical-align: middle; font-size: 1em'>Frame</td>
+                <td>
+                    <input type='number' class="hours" id='hrs-frame{{ element.id }}' value="1"/>
+                </td>
+            </tr>
+            <tr>
+                <td style='vertical-align: middle; font-size: 1em'>Mechanical</td>
+                <td>
+                    <input type='number' class="hours" id='hrs-mechanical{{ element.id }}' value="1"/>
+                </td>
+            </tr>
+            <tr>
+                <td style='vertical-align: middle; font-size: 1em'>Paint/Supplies</td>
+                <td>
+                    <input type='number' class="hours" id='hrs-paint{{ element.id }}' value="1"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <hr size="5" style="background-color: #1b1b1b"/>
+    {% endfor %}
+
+    <br/>
+    <a href="#" id="btnestimate" onclick="myFunction();" class="ui-alt-icon ui-btn ui-shadow ui-corner-all ui-icon-action ui-btn-icon-left">Estimate</a>
+    <script>
+
+        $(".hours").blur(function(){
+            numerico($(this), 0, 0, 0);
+        });
+
+        var lista = [];
+
+        function update_Lista() {
+            lista = [];
+            $(".table-listing").each(function () {
+                var ide = $(this).attr('ide');
+                var service_type = parseInt($("#service-type"+ide).val());
+                var hrs_labor = parseInt($("#hrs-labor"+ide).val());
+                var hrs_refinish = parseInt($("#hrs-refinish"+ide).val());
+                var hrs_frame = parseInt($("#hrs-frame"+ide).val());
+                var hrs_mechanical = parseInt($("#hrs-mechanical"+ide).val());
+                var hrs_paint = parseInt($("#hrs-paint"+ide).val());
+                lista.push({"ide":ide, "listae": [service_type, hrs_labor, hrs_refinish, hrs_frame, hrs_mechanical, hrs_paint]});
+            });
+        }
+
+        function myFunction() {
+            update_Lista();
+            if (lista.length > 0){
+                location.href = "/estimations?id={{ customer.id }}&lista_ids={{ lista_ids }}&lista="+JSON.stringify(lista);
+            }else{
+                alert("Error");
+            }
+        }
+    </script>
+{% endblock %}

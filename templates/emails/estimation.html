@@ -1,0 +1,45 @@
+<h4>Hi, {{ estimation.customer.name }}</h4>
+
+<h5>Estimation Details</h5>
+<ul>
+    {% for detail in estimation.my_details %}
+        <li>{{ detail.element.name }}</li>
+    {% endfor %}
+</ul>
+
+<h4>The estimation value for your repair is: </h4>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Description</th>
+        <th style="width: 80px">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>SubTotal</td>
+        <td style="text-align: right">$ {{ estimation.subtotal_value|floatformat:2 }}</td>
+    </tr>
+    <tr>
+        <td>Tax</td>
+        <td style="text-align: right">$ {{ estimation.tax_value|floatformat:2 }}</td>
+    </tr>
+    <tr>
+        <td>Discount</td>
+        <td style="text-align: right">$ {{ estimation.discount_value|floatformat:2 }}</td>
+    </tr>
+    <tr>
+        <td>Total</td>
+        <td style="text-align: right">$ {{ estimation.total_value|floatformat:2 }}</td>
+    </tr>
+    </tbody>
+</table>
+<p>
+    Thank you for trusting in our work.
+    We will be waiting for your confirmation to proceed with the repair.
+</p>
+<br/>
+<p>Best Regards</p>
+<p style="font-size: 17px;">
+    Willy's Shop Team
+</p>
